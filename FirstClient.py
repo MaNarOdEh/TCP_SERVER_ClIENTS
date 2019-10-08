@@ -12,7 +12,6 @@ NUMBER_THREAD = 2
 """
 JOB_NUMBER = [1, 2]  # give each thread his job!
 queue = Queue()
-open = True
 
 
 # connecting to the server!
@@ -26,8 +25,9 @@ def connect_to_the_server():
         print("Connection Done!")
         receiving_message()
     except socket.error as msg:
-        print("Socket Error ", str(msg))
+        print("\nSocket Error ", str(msg))
         print("Retrying! ...")
+        close()
 
 
 def receiving_message():
@@ -59,8 +59,9 @@ def send_message():
             s.send(str.encode(msg))  # send the output to the server!!
             print("\nThe Server Received The Message!")
         except socket.error:
+            close()
             print("\nYour message is not received")
-    quit()
+    close()
 
 
 # create two necessary thread
@@ -96,6 +97,9 @@ def create_jobs():
 
 
 def close():
+    print("we will close the programme now!!")
+    global open
+    open= False
     sys.exit()
     quit()
 def main():
