@@ -1,6 +1,7 @@
 import socket  # Import socket module
 from queue import Queue
 import threading
+import sys
 
 NUMBER_THREAD = 2
 """
@@ -11,6 +12,7 @@ NUMBER_THREAD = 2
 """
 JOB_NUMBER = [1, 2]  # give each thread his job!
 queue = Queue()
+open = True
 
 
 # connecting to the server!
@@ -30,22 +32,35 @@ def connect_to_the_server():
 
 def receiving_message():
     global s
-    while True:
+    global open
+    open =True
+    while open:
         data = s.recv(1024)
         if len(data) > 0:
             # print the string output
             print("Received Message is :", data[:].decode("utf-8"))
+            if data[:].decode("utf-8") == 'close':
+                open = False
+                s.send(str.encode('close'))
+                print("The connection with that server is closed!!")
+                close()
+                break
             s.send(str.encode("Message Is Received Correctly"))  # send the output to the server!!
+    quit()
+    print("the System should be closed!! ")
 
 
 def send_message():
-    while True:
+    global open
+    open = True
+    while open:
         msg = input("\nInput the Message You wan't to send: ")
         try:
             s.send(str.encode(msg))  # send the output to the server!!
             print("\nThe Server Received The Message!")
         except socket.error:
             print("\nYour message is not received")
+    quit()
 
 
 # create two necessary thread
@@ -80,9 +95,14 @@ def create_jobs():
     queue.join()
 
 
+def close():
+    sys.exit()
+    quit()
 def main():
     create_thread()
     create_jobs()
+    if open == False:
+        sys.exit()
 
 
 main()

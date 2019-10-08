@@ -1,6 +1,7 @@
 import socket  # Import socket module
 from queue import Queue
 import threading
+import sys
 
 NUMBER_THREAD = 2
 """
@@ -35,6 +36,9 @@ def receiving_message():
         if len(data) > 0:
             # print the string output
             print("Received Message is :", data[:].decode("utf-8"))
+            if data[:].decode("utf-8") == 'close':
+                s.send(str.encode('close'))
+                sys.exit(0)
             s.send(str.encode("Message Is Received Correctly"))  # send the output to the server!!
 
 

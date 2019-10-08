@@ -96,7 +96,7 @@ def accepting_connection():
 
 def start_accept_orders():
     while True:
-        cmd = input("input (list to show all connected clients or select any target client"
+        cmd = input("\ninput (list to show all connected clients or select any target client"
                     "by input select id_client:\n")
         # print(cmd)
         if cmd == 'list':
@@ -151,10 +151,12 @@ def send_message_to_special_client(connection):
             if len(str.encode(cmd)) > 0:
                 connection.send(str.encode(cmd))
                 client_response = str(connection.recv(20480), "utf-8")
-                if client_response == 'QUIT':
-                    connection.close()
-                    print("Connection with that clients is closed! ")
                 print("the Result Message From Our client: ", client_response, end="")
+                if client_response == 'close':
+                    connection.close()
+                    print("\nConnection with that clients is closed! ")
+                    break
+
                 """ 
                 receive --> the result form the clients and convert it from byte to a string
                 1024 --> when the data is to big then it will junk and receiving as 1024 each time
