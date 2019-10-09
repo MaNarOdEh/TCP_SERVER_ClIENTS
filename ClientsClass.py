@@ -54,11 +54,12 @@ class Client:
         for i in range(self.NUMBER_THREAD):
             t = threading.Thread(target=self.job)  # creating a thread !
             """
-            target =work that's means we will define a function that his name is work that it will till each thread what 
+            target =job that's means we will define a function that his name is job that it will till each thread what 
             will he do (what his job)
 
             """
-            t.daemon = True  # this means that will the main thread will kill then make sure that also that thread will stop
+            t.daemon = True
+            # this means that will the main thread will kill then make sure that also that thread will stop
             t.start()
 
     def job(self):
@@ -95,7 +96,7 @@ class Client:
         global open
         while open:
             msg = input("\nInput the Message You wan't to send: ")
-            if  open == False :
+            if not open:
                 break
             try:
                 self.client.send(str.encode(msg))  # send the output to the server!!

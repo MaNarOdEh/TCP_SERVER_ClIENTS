@@ -15,10 +15,10 @@ Thread  for each client--> Receiving message From any connected  Clients
 """
 NUMBER_OF_THREAD = 2
 
-JOB_NUMBER = [1, 2]
-queue = Queue()
-all_connections = []
-all_address = []
+JOB_NUMBER = [1, 2]  # each thread have special job 1 and this number will indicates the job for each thread
+queue = Queue()      # add jobs numbers  in this queue
+all_connections = []  # store all connection without server in this list
+all_address = []      # store all port number with Ip address for each client
 
 
 #  create a socket to connect two computers
@@ -85,7 +85,8 @@ def accepting_connection():
             all_address.append(address)
             all_connections.append(connection)
             print("\nConnection has been established! " + " IP " + address[0] + " | Port " + str(address[1]))
-            #threading.Thread(target=receive_and_print(connection), args=(connection,)).start()
+            #t = threading.Thread(target=receive_and_print, args=(connection,))
+            #t.start()
 
 
         except socket.error:
