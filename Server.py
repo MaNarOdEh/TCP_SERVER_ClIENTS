@@ -9,13 +9,13 @@ from queue import Queue
 
 Thread 1--> Listen and accept connections from other clients(listening for new client and establish connection with them)
 Thread 2--> Sending commands to an already connected client(dealing with connecting client)
-Thread 3--> Receiving message From any connected Clients
+Thread  for each client--> Receiving message From any connected  Clients
 
 
 """
-NUMBER_OF_THREAD = 3
+NUMBER_OF_THREAD = 2
 
-JOB_NUMBER = [1, 2, 3]
+JOB_NUMBER = [1, 2]
 queue = Queue()
 all_connections = []
 all_address = []
