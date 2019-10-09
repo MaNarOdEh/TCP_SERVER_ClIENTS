@@ -2,7 +2,7 @@ import socket
 import threading
 from queue import Queue
 
-#  Two Thread
+#  Three Thread
 
 """
 
@@ -13,9 +13,9 @@ Thread 3--> Receiving message From any connected Clients
 
 
 """
-NUMBER_OF_THREAD = 2
+NUMBER_OF_THREAD = 3
 
-JOB_NUMBER = [1, 2]
+JOB_NUMBER = [1, 2, 3]
 queue = Queue()
 all_connections = []
 all_address = []
@@ -85,6 +85,9 @@ def accepting_connection():
             all_address.append(address)
             all_connections.append(connection)
             print("\nConnection has been established! " + " IP " + address[0] + " | Port " + str(address[1]))
+            #threading.Thread(target=receive_and_print(connection), args=(connection,)).start()
+
+
         except socket.error:
             print("Error Accepting Connection ")
 
@@ -172,6 +175,18 @@ def send_message_to_special_client(connection):
             break
 
 
+# receive message from clients and print it
+def receive_and_print(conn):
+    while True:
+        data = conn.recv(1024)
+        if not data:
+            break
+        if data[:].decode("utf-8") == 'Message Is Received Correctly':
+            break
+        print("\nReceived Message is :", data[:].decode("utf-8"))
+       # conn.sendall(data)
+
+
 # create two necessary thread
 def create_thread():
     for i in range(NUMBER_OF_THREAD):
@@ -196,6 +211,7 @@ def job():
             accepting_connection()
         if x == 2:
             start_accept_orders()
+
         queue.task_done()
 
 

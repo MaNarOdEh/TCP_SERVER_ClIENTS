@@ -80,7 +80,7 @@ class Client:
                 data = self.client.recv(1024)
                 if len(data) > 0:
                     # print the string output
-                    print("Received Message is :", data[:].decode("utf-8"))
+                    print("\nReceived Message is :", data[:].decode("utf-8"))
                     if data[:].decode("utf-8") == 'close':
                         open = False
                         self.client.send(str.encode('close'))
@@ -95,6 +95,8 @@ class Client:
         global open
         while open:
             msg = input("\nInput the Message You wan't to send: ")
+            if  open == False :
+                break
             try:
                 self.client.send(str.encode(msg))  # send the output to the server!!
                 print("\nThe Server Received The Message!")
