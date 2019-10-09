@@ -1,7 +1,6 @@
 import socket
 import threading
 from queue import Queue
-import sys
 
 #  Two Thread
 
