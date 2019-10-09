@@ -33,7 +33,7 @@ def connect_to_the_server():
 def receiving_message():
     global s
     global open
-    open =True
+    open = True
     while open:
         data = s.recv(1024)
         if len(data) > 0:
@@ -43,11 +43,9 @@ def receiving_message():
                 open = False
                 s.send(str.encode('close'))
                 print("The connection with that server is closed!!")
-                close()
-                break
             s.send(str.encode("Message Is Received Correctly"))  # send the output to the server!!
-    quit()
     print("the System should be closed!! ")
+    close()
 
 
 def send_message():
@@ -59,7 +57,6 @@ def send_message():
             s.send(str.encode(msg))  # send the output to the server!!
             print("\nThe Server Received The Message!")
         except socket.error:
-            close()
             print("\nYour message is not received")
     close()
 
@@ -99,9 +96,11 @@ def create_jobs():
 def close():
     print("we will close the programme now!!")
     global open
-    open= False
+    open = False
     sys.exit()
     quit()
+
+
 def main():
     create_thread()
     create_jobs()

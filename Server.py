@@ -7,9 +7,11 @@ import sys
 
 """
 
-Thread 1-->Listen and accept connections from other clients(listening for new client and establish connection with them)
-Thread 2-->Sending commands to an already connected client(dealing with connecting client)
-Thread 3-->Receiving message From any connected Clients
+
+Thread 1--> Listen and accept connections from other clients(listening for new client and establish connection with them)
+Thread 2--> Sending commands to an already connected client(dealing with connecting client)
+Thread 3--> Receiving message From any connected Clients
+
 
 """
 NUMBER_OF_THREAD = 2
